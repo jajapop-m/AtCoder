@@ -37,9 +37,9 @@ end
 
 
 def check(i,j,q,c,cost)
-    if 0<=i && 0<=j && i<$H && j<$W then
+    if 0<=i && 0<=j && i<$H && j<$W
         nc = c + $A[i][j]
-        if nc < cost[i][j] then
+        if nc < cost[i][j]
             q << [i,j]
             cost[i][j] = nc
         end
