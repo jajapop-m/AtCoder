@@ -1,0 +1,1 @@
+puts gets.chomp.match?("^A?KIHA?BA?RA?$") ? "YES" : "NO"
