@@ -1,28 +1,54 @@
-# TLE!!
+class UnionFind
+  attr_accessor :rank, :parent, :size
+  def initialize(s)
+    @rank = Array.new(s,0)
+    @parent = Array.new(s,&:itself)
+    @size = Array.new(s,1)
+  end
 
-require 'set'
-n,m = gets.split.map(&:to_i)
-check = Array.new(n+1){Set.new}
-max = 1
+  def union(x,y)
+    x_parent = get_parent(x)
+    y_parent = get_parent(y)
+    return if x_parent == y_parent
+
+    if rank[x_parent] > rank[y_parent]
+      parent[y_parent] = x_parent
+      size[x_parent] += size[y_parent]
+    else
+      parent[x_parent] = y_parent
+      size[y_parent] += size[x_parent]
+      rank[y_parent] += 1 if rank[x_parent]==rank[y_parent]
+    end
+  end
+
+  def get_parent(id)
+    parent[id] == id ? id : parent[id] = get_parent(parent[id])
+  end
+end
+
+n,m=gets.split.map(&:to_i)
+u = UnionFind.new(n)
 m.times do
   a,b = gets.split.map(&:to_i)
-  max = [max,check[b].length+1].max if check[b].add?(a)
-  max = [max,check[a].length+1].max if check[a].add?(b)
+  u.union(a-1,b-1)
 end
-puts max
+p u.size.max
 
 
+# TLE!!
 
-#
-#
-# check = Array.new(n){[]*n}
-# ans = [1]*n
+# require 'set'
+# n,m = gets.split.map(&:to_i)
+# check = Array.new(n+1){Set.new}
 # max = 1
 # m.times do
-#   a,b = gets.split.map(&:to_i).sort
-#   next if check[a-1][b-1]
-#   check[a-1][b-1] = true
-#   ans[a-1] += 1
-#   max = [max,ans[a-1]].max
+#   a,b = gets.split.map(&:to_i)
+#   check[b].add?(a)
+#   check[a].add?(b)
 # end
-# puts max
+# ans = 0
+# check.each do |c|
+#   ans = [ans,c.length+1].max
+# end
+# p check
+# p ans
