@@ -1,13 +1,8 @@
 n,m=gets.split.map(&:to_i)
-k=Array.new(n){[]}
+k=Array.new(n,0)
 m.times do |i|
   ki,*s=gets.split.map(&:to_i)
-  s.each{|si|k[si-1]<<i} # i番目のスイッチが繋がれた電球番号を一旦保存
-end
-k=k.map do |s|
-  sw=0
-  s.each{|si|sw= sw | 1 << si} # i番目のスイッチが繋がれた電球番号を2進数表現
-  sw
+  s.each{|si|k[si-1]= k[si-1] | 1 << i} # i番目のスイッチが繋がれた電球番号を2進数で保存
 end
 p=gets.split.reverse.join.to_i(2) # pを2進数表現
 ans=0
